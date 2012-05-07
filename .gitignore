@@ -27,3 +27,4 @@ IQ.IR.MPC.Azure/csx
 .DS_Store
 .Trashes
 .Spotlight-V100
+node_modules/
