@@ -1,0 +1,17 @@
+.health {
+  width: 200px;
+  height: 20px;
+  border: 1px solid #555;
+  background-color: #999;
+  margin: 20px auto; }
+  .health .health-value {
+    width: 80%;
+    height: 100%;
+    background-color: #22bb22; }
+  .health .health-text {
+    color: #fff;
+    margin-left: 5px; }
+
+.kineticjs-content {
+  display: block !important;
+  margin: 0px auto; }

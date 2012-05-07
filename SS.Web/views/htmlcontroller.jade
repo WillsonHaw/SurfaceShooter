@@ -1,0 +1,30 @@
+﻿
+!!! 5
+html
+	head
+		title= user.charName
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+		link(rel='stylesheet', href='/css/controller1.css')
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', type='text/javascript')
+		script(src='/js/controller.js', type='text/javascript')
+
+	body
+		input#clientName(type='hidden', value='#{user.charName}')
+		input#clientId(type='hidden', value='#{user.id}')
+
+		div.health
+			div.health-value
+				span.health-text
+
+		div.controls
+			div.dir-controls
+				button#btn-up(ref='u') ↑
+				button#btn-left(ref='l') ←
+				button#btn-right(ref='r') →
+				button#btn-down(ref='d') ↓
+
+			div.act-controls
+				button#btn-fire(ref='f') FIRE!
+
+		div#pubnub(pub-key='demo', sub-key='demo', ssl='off', origin='pubsub.pubnub.com')
+		script(src='http://cdn.pubnub.com/pubnub-3.1.min.js')

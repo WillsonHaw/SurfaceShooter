@@ -1,0 +1,9 @@
+﻿{
+    "name": "surface-shooter",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "2.5.9",
+        "jade": "0.26.0",
+        "pubnub": "3.1.8"
+    }
+}

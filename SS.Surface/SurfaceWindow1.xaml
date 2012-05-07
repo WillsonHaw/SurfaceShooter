@@ -1,0 +1,28 @@
+﻿<s:SurfaceWindow x:Class="SS.Surface.SurfaceWindow1"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:s="http://schemas.microsoft.com/surface/2008"
+                 xmlns:ViewModels="clr-namespace:SS.Surface.ViewModels" Title="SS.Surface">
+    <s:SurfaceWindow.Resources>
+        <ViewModels:SurfaceWindowViewModel x:Key="ViewModel" />
+    </s:SurfaceWindow.Resources>
+    
+    <Grid DataContext="{StaticResource ViewModel}">
+        <s:ScatterView x:Name="PlayingField" 
+                       ItemsSource="{Binding Users}">
+            <s:ScatterView.ItemContainerStyle>
+                <Style TargetType="s:ScatterViewItem">
+                    <Setter Property="Orientation"
+                            Value="{Binding Orientation, Mode=TwoWay}" />
+                    <Setter Property="Center"
+                            Value="{Binding Position, Mode=TwoWay}" />
+                </Style>
+            </s:ScatterView.ItemContainerStyle>
+            <s:ScatterView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </s:ScatterView.ItemTemplate>
+        </s:ScatterView>
+    </Grid>
+</s:SurfaceWindow>

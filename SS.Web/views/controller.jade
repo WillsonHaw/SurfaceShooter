@@ -1,0 +1,23 @@
+﻿
+!!! 5
+html
+	head
+		title= user.charName
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+		link(rel='stylesheet', href='/css/controller1.css')
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', type='text/javascript')
+		script(src='/js/kinetic-3.9.4.min.js', type='text/javascript')
+		script(src='/js/controller.js', type='text/javascript')
+
+	body
+		input#clientName(type='hidden', value='#{user.charName}')
+		input#clientId(type='hidden', value='#{user.id}')
+
+		div.health
+			div.health-value
+				span.health-text
+
+		div#container
+			
+		div#pubnub(pub-key='demo', sub-key='demo', ssl='off', origin='pubsub.pubnub.com')
+		script(src='http://cdn.pubnub.com/pubnub-3.1.min.js')

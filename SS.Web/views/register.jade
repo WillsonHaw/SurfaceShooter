@@ -1,0 +1,20 @@
+﻿
+!!! 5
+html
+	head
+		title Create Your Nub
+		link(rel='stylesheet', href='/css/bootstrap.css')
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', type='text/javascript')
+		script(src='/js/register.js', type='text/javascript')
+
+	body
+		form#create-form.well.form-horizontal(method='POST', action='/')
+			fieldset
+				legend Create Your Nub
+				div.control-group
+					label.control-label(for='CharName') Character Name
+					div.controls
+						input#CharName.input-large(name='CharName', type='text', autocomplete='off')
+
+				div.form-actions
+					input#SubmitForm.btn.btn-primary(type='submit', value='Fight!')
