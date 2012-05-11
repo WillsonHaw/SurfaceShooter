@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using Newtonsoft.Json.Linq;
@@ -42,6 +41,9 @@ namespace SS.Surface.ViewModels
                             var name = jObj["charName"].ToString();
                             CreateUser(id, name);
                             break;
+                        case "disconnected":
+                            RemoveUser(id);
+                            break;
                         case "uu":
                             if (user != null)
                                 user.RemoveAction(user.Forward);
@@ -74,11 +76,34 @@ namespace SS.Surface.ViewModels
                             if (user != null)
                                 user.AddAction(user.Right);
                             break;
-                        case "f":
+                        case "fd":
                             if (user != null)
-                                user.Shoot(id);
+                                user.AddAction(user.Shoot);
+                            break;
+                        case "fu":
+                            if (user != null)
+                                user.RemoveAction(user.Shoot);
                             break;
                     }
+                }
+            }
+        }
+
+        private void RemoveUser(int id)
+        {
+            var user = Users.FirstOrDefault(x => x.Id == id);
+
+            if (user != null)
+            {
+                if (Dispatcher.CurrentDispatcher != _dispatcher)
+                {
+                    _dispatcher.BeginInvoke(
+                       new Action(() => Users.Remove(user)),
+                       DispatcherPriority.Send);
+                }
+                else
+                {
+                    Users.Remove(user);
                 }
             }
         }
@@ -109,13 +134,20 @@ namespace SS.Surface.ViewModels
                 {
                     Users.Add(newUser);
                 }
+                PubNubObservable.Publish("client_channel_" + id, new { message = "update", hp = newUser.HP });
             }
+        }
+
+        public void UserHit(User user, ProjectileViewModel projVm)
+        {
+            user.TakeDamage(projVm.Damage);
         }
 
         #region Properties
 
         public ObservableCollection<User> Users { get; set; } 
         public ObservableCollection<string> Messages { get; set; }
+        public string GameURL { get { return "http://warm-samurai-5129.herokuapp.com/"; } }
         
         #endregion
     }

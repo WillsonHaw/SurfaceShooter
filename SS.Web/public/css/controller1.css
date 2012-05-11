@@ -1,16 +1,34 @@
+html {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent; }
+
 .health {
+  z-index: 20;
+  position: absolute;
+  top: 10px;
+  left: 200px;
   width: 200px;
   height: 20px;
   border: 1px solid #555;
   background-color: #999;
   margin: 20px auto; }
   .health .health-value {
-    width: 80%;
+    width: 100%;
     height: 100%;
     background-color: #22bb22; }
   .health .health-text {
     color: #fff;
     margin-left: 5px; }
+
+#container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%; }
 
 .kineticjs-content {
   display: block !important;

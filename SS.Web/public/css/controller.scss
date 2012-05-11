@@ -1,7 +1,17 @@
 ﻿$health-bar-width: 200px;
 $health-bar-height: 20px;
 
+html {
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
 .health {
+	z-index: 20;
+	position: absolute;
+	top: 10px;
+	left: 200px;
 	width: $health-bar-width;
 	height: $health-bar-height;
 	border: 1px solid #555;
@@ -9,7 +19,7 @@ $health-bar-height: 20px;
 	margin: 20px auto;
 
 	.health-value {
-		width: 80%;
+		width: 100%;
 		height: 100%;
 		background-color: #22bb22;
 	}
@@ -18,6 +28,16 @@ $health-bar-height: 20px;
 		color: #fff;
 		margin-left: 5px;
 	}
+}
+
+#container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .kineticjs-content {

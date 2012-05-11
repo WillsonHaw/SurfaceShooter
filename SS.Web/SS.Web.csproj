@@ -34,8 +34,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="constants.js" />
     <Content Include="public\css\bootstrap.css" />
+    <Content Include="public\css\reset.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>reset.scss</DependentUpon>
+    </Content>
+    <Content Include="public\css\reset.scss">
+      <Generator>ScssGenerator</Generator>
+      <LastGenOutput>reset.css</LastGenOutput>
+    </Content>
+    <Content Include="public\js\controls.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>controls.js</LastGenOutput>
+    </Content>
+    <Content Include="public\js\controls.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>controls.coffee</DependentUpon>
+    </Content>
     <Content Include="web.js" />
     <Content Include="public\css\controller1.css">
       <AutoGen>True</AutoGen>
@@ -46,7 +63,6 @@
       <Generator>ScssGenerator</Generator>
       <LastGenOutput>controller1.css</LastGenOutput>
     </Content>
-    <Content Include="public\js\controller.js" />
     <Content Include="public\js\kinetic-3.9.4.min.js" />
     <Content Include="public\js\register.js" />
     <None Include="package.json" />

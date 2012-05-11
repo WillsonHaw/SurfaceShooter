@@ -54,5 +54,25 @@ namespace SS.Surface.Classes
         {
             return _observable.Subscribe(observer);
         }
+        
+        public static void Publish(string channel, object obj)
+        {
+            var json = JsonConvert.SerializeObject(obj);
+            var urlComponents = new[]
+                                    {
+                                        "publish", 
+                                        Constants.PUBLISH_KEY,
+                                        Constants.SUBSCRIBE_KEY,
+                                        "0",
+                                        channel,
+                                        "0",
+                                        json
+                                    };
+            var url = Origin + string.Join("/", urlComponents.Select(HttpUtility.UrlEncode));
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Timeout = 200000;
+            request.ReadWriteTimeout = 200000;
+            request.GetResponse();
+        }
     }
 }

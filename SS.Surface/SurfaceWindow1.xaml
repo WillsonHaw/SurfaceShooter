@@ -2,12 +2,16 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:s="http://schemas.microsoft.com/surface/2008"
-                 xmlns:ViewModels="clr-namespace:SS.Surface.ViewModels" Title="SS.Surface">
+                 xmlns:ViewModels="clr-namespace:SS.Surface.ViewModels"
+                 xmlns:Converters="clr-namespace:SS.Surface.Converters" Title="SS.Surface">
     <s:SurfaceWindow.Resources>
-        <ViewModels:SurfaceWindowViewModel x:Key="ViewModel" />
+        <Converters:StringToQRCodeConverter x:Key="qrConverter" />
     </s:SurfaceWindow.Resources>
     
-    <Grid DataContext="{StaticResource ViewModel}">
+    <Grid>
+        <Canvas x:Name="ProjectileField">
+        </Canvas>
+        
         <s:ScatterView x:Name="PlayingField" 
                        ItemsSource="{Binding Users}">
             <s:ScatterView.ItemContainerStyle>
@@ -24,5 +28,18 @@
                 </DataTemplate>
             </s:ScatterView.ItemTemplate>
         </s:ScatterView>
-    </Grid>
+
+        <Grid Background="White"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Bottom"
+              Margin="20"
+              Width="150"
+              Height="150">
+            <Image Source="{Binding GameURL, Converter={StaticResource qrConverter}}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Width="120"
+                   Height="120" />
+        </Grid>
+    </Grid>    
 </s:SurfaceWindow>

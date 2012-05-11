@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Timers;
 using System.Windows;
+using SS.Surface.Weapons;
 
 namespace SS.Surface.Classes
 {
@@ -54,6 +55,17 @@ namespace SS.Surface.Classes
                 RaisePropertyChanged("Orientation");
             }
         }
+        private IWeapon _currentWeapon;
+        public IWeapon CurrentWeapon
+        {
+            get { return _currentWeapon; }
+            set
+            {
+                _currentWeapon = value;
+                RaisePropertyChanged("CurrentWeapon");
+            }
+        }
+
         #endregion
 
         private Timer _actionTimer;
@@ -65,6 +77,8 @@ namespace SS.Surface.Classes
             _actionTimer = new Timer(16);
             _actionTimer.Elapsed += DoActions;
             _actionTimer.Start();
+
+            CurrentWeapon = new Pistol();
         }
 
         private void DoActions(object state, ElapsedEventArgs elapsedEventArgs)
@@ -75,36 +89,45 @@ namespace SS.Surface.Classes
             }
             else
             {
-                foreach (Action action in _actionList)
+                lock (_actionList)
                 {
-                    action.BeginInvoke(null, null);
+                    foreach (Action action in _actionList)
+                    {
+                        action.BeginInvoke(null, null);
+                    }
                 }
             }
         }
 
         public void AddAction(Action action)
         {
-            if (!_actionList.Contains(action))
+            lock (_actionList)
             {
-                _actionList.Add(action);
-            }
+                if (!_actionList.Contains(action))
+                {
+                    _actionList.Add(action);
+                }
 
-            if (!_actionTimer.Enabled)
-                _actionTimer.Start();
+                if (!_actionTimer.Enabled)
+                    _actionTimer.Start();
+            }
         }
 
         public void RemoveAction(Action action)
         {
-            if (_actionList.Contains(action))
-                _actionList.Remove(action);
+            lock (_actionList)
+            {
+                if (_actionList.Contains(action))
+                    _actionList.Remove(action);
 
-            if (_actionList.Count == 0)
-                _actionTimer.Stop();
+                if (_actionList.Count == 0)
+                    _actionTimer.Stop();
+            }
         }
 
-        public void Shoot(int id)
+        public void Shoot()
         {
-
+            CurrentWeapon.Shoot(Id, Position, Orientation);
         }
 
         public void Right()
@@ -133,6 +156,15 @@ namespace SS.Surface.Classes
             var x = Math.Cos(rads) * speed + Position.X;
             var y = Math.Sin(rads) * speed + Position.Y;
             Position = new Point(x, y);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            HP -= damage;
+
+            if (HP < 0) HP = 0;
+
+            PubNubObservable.Publish("client_channel_" + Id, new { message = "update", hp = HP });
         }
 
         public void RaisePropertyChanged(string propertyName)

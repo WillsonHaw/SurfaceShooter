@@ -41,7 +41,9 @@
       <HintPath>..\packages\RestSharp.103.0.0\lib\net35-client\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Main.1.0.11226\lib\Net4\System.Reactive.dll</HintPath>
@@ -64,6 +66,9 @@
     <Reference Include="Microsoft.Surface" />
     <Reference Include="Microsoft.Surface.Presentation" />
     <Reference Include="Microsoft.Surface.Presentation.Generic" />
+    <Reference Include="zxing">
+      <HintPath>..\..\..\Dev\iQmetrix\XQ.Stream\Common\lib\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -71,9 +76,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\PubNub.cs" />
+    <Compile Include="Classes\QRCode.cs" />
     <Compile Include="Classes\User.cs" />
+    <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Converters\StringToQRCodeConverter.cs" />
+    <Compile Include="Projectiles\Projectile.xaml.cs">
+      <DependentUpon>Projectile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Projectiles\ProjectileCanvas.cs" />
+    <Compile Include="ViewModels\ProjectileViewModel.cs" />
     <Compile Include="ViewModels\SurfaceWindowViewModel.cs" />
+    <Compile Include="Weapons\BaseWeapon.cs" />
+    <Compile Include="Weapons\IWeapon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Weapons\Spreader.cs" />
+    <Page Include="Projectiles\Projectile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,7 +105,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\_PubNub.cs" />
     <Compile Include="SurfaceWindow1.xaml.cs">
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -114,12 +136,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Projectiles\projectile.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SS.Surface.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Weapons\MachineGun.cs" />
+    <Compile Include="Weapons\Pistol.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
