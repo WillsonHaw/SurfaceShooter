@@ -1,17 +1,17 @@
 ﻿$health-bar-width: 200px;
 $health-bar-height: 20px;
 
-html {
+html, body {
 	-webkit-user-select: none;
 	-webkit-touch-callout: none;
 	-webkit-tap-highlight-color: transparent;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .health {
 	z-index: 20;
-	position: absolute;
-	top: 10px;
-	left: 200px;
 	width: $health-bar-width;
 	height: $health-bar-height;
 	border: 1px solid #555;
@@ -30,14 +30,33 @@ html {
 	}
 }
 
-#container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
+#left-analog {
+    float: left;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+	width: 50%;
 	height: 100%;
+    background-color: #eee;
+}
+
+#right-analog {
+    float: left;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ddd;
+}
+
+#overlay, #help {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 
 .kineticjs-content {

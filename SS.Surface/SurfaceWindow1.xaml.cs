@@ -4,10 +4,12 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Microsoft.Surface;
+using Microsoft.Surface.Core;
 using Microsoft.Surface.Presentation.Controls;
 using SS.Surface.Classes;
 using SS.Surface.Projectiles;
@@ -35,6 +37,7 @@ namespace SS.Surface
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
+            SourceInitialized += OnSourceInitialized;
 
             _dispatcher = Dispatcher.CurrentDispatcher;
             _hitProjectiles = new List<Projectile>();
@@ -46,6 +49,20 @@ namespace SS.Surface
 
             _vm = new SurfaceWindowViewModel();
             DataContext = _vm;
+        }
+
+        private void OnSourceInitialized(object sender, EventArgs eventArgs)
+        {
+            var touchTarget = new TouchTarget(new WindowInteropHelper(this).Handle,
+                                                EventThreadChoice.OnCurrentThread);
+            touchTarget.FrameReceived += OnFrameReceived;
+            touchTarget.EnableInput();
+            touchTarget.EnableImage(ImageType.Normalized);
+        }
+
+        private void OnFrameReceived(object sender, FrameReceivedEventArgs frameReceivedEventArgs)
+        {
+            throw new NotImplementedException();
         }
 
         void GameTimeElapsed(object sender, EventArgs eventArgs)
@@ -145,6 +162,11 @@ namespace SS.Surface
         private void OnWindowUnavailable(object sender, EventArgs e)
         {
             //TODO: disable audio, animations here
+        }
+
+        private void PlayingField_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            
         }
 
     }

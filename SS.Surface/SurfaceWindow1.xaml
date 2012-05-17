@@ -13,6 +13,7 @@
         </Canvas>
         
         <s:ScatterView x:Name="PlayingField" 
+                       TouchDown="PlayingField_TouchDown"
                        ItemsSource="{Binding Users}">
             <s:ScatterView.ItemContainerStyle>
                 <Style TargetType="s:ScatterViewItem">

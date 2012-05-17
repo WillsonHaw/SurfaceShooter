@@ -44,15 +44,16 @@
       <Generator>ScssGenerator</Generator>
       <LastGenOutput>reset.css</LastGenOutput>
     </Content>
-    <Content Include="public\js\controls.coffee">
+    <Content Include="public\js\controller.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
-      <LastGenOutput>controls.js</LastGenOutput>
+      <LastGenOutput>controller.js</LastGenOutput>
     </Content>
-    <Content Include="public\js\controls.js">
+    <Content Include="public\js\controller.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>controls.coffee</DependentUpon>
+      <DependentUpon>controller.coffee</DependentUpon>
     </Content>
+    <Content Include="public\js\virtualjoystick.js" />
     <Content Include="web.js" />
     <Content Include="public\css\controller1.css">
       <AutoGen>True</AutoGen>

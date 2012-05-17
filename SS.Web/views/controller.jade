@@ -1,28 +1,36 @@
 ﻿
 !!! 5
 html
-	head
-		title= user.charName
-		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-		meta(name='MobileOptimized', content='width')
-		meta(name='HandheldFriendly', content='true')
-		link(rel='stylesheet', href='/css/reset.css')
-		link(rel='stylesheet', href='/css/controller1.css')
+    head
+        title= user.charName
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no')
+        meta(name='viewport', content='target-densitydpi=device-dpi')
+        meta(name='apple-mobile-web-app-capable', content='yes')
+        meta(name='apple-mobile-web-app-status-bar-style', content='black-translucent')
+        meta(name='MobileOptimized', content='width')
+        meta(name='HandheldFriendly', content='true')
+        link(rel='stylesheet', href='/css/reset.css')
+        link(rel='stylesheet', href='/css/controller1.css')
 
-	body
-		input#clientName(type='hidden', value='#{user.charName}')
-		input#clientId(type='hidden', value='#{user.id}')
+    body
+        input#clientName(type='hidden', value='#{user.charName}')
+        input#clientId(type='hidden', value='#{user.id}')
+        
+        div#help
+            <p>Hold your device sideways to use the controller</p>
 
-		div#help
-			<p>Hold your device sideways to use the controller</p>
+        div#right-analog
+        div#left-analog
 
-		div#container
-			div.health
-				div.health-value
-					span.health-text 100%
-			
-		div#pubnub(pub-key='pub-0430d1c8-f8ca-4e48-b925-e7a735511fb0', sub-key='sub-b0a3f773-9639-11e1-8eda-7d8ea7122a9d', ssl='off', origin='pubsub.pubnub.com')
-		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', type='text/javascript')
-		script(src='http://cdn.pubnub.com/pubnub-3.1.min.js')
-		script(src='/js/kinetic-3.9.4.min.js', type='text/javascript')
-		script(src='/js/controls.js', type='text/javascript')
+        div#overlay
+            div#result
+            div.health
+                div.health-value
+                    span.health-text 100%
+
+        div#pubnub(pub-key='pub-0430d1c8-f8ca-4e48-b925-e7a735511fb0', sub-key='sub-b0a3f773-9639-11e1-8eda-7d8ea7122a9d', ssl='off', origin='pubsub.pubnub.com')
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', type='text/javascript')
+        script(src='http://cdn.pubnub.com/pubnub-3.1.min.js')
+        script(src='/js/kinetic-3.9.4.min.js', type='text/javascript')
+        script(src='/js/virtualjoystick.js', type='text/javascript')
+        script(src='/js/controller.js', type='text/javascript')
