@@ -28,6 +28,8 @@ namespace SS.Surface.XNA
         private UserManager _userManager;
         private ProjectileManager _projectileManager;
         private InputManager _inputManager;
+        private WeaponsManager _weaponsManager;
+        private CollisionManager _collisionManager;
 
         /// <summary>
         /// The target receiving all surface input for the application.
@@ -136,9 +138,15 @@ namespace SS.Surface.XNA
             _userManager = new UserManager(this);
             _projectileManager = new ProjectileManager(this);
             _inputManager = new InputManager(this, _userManager, _projectileManager);
+            _weaponsManager = new WeaponsManager(this);
+            _collisionManager = new CollisionManager(this, _userManager, _projectileManager, _weaponsManager);
             Components.Add(_userManager);
             Components.Add(_projectileManager);
             Components.Add(_inputManager);
+            Components.Add(_weaponsManager);
+            Components.Add(_collisionManager);
+
+            PubNubObservable.Publish(Constants.SURFACE_CHANNEL, new { start = true });
 
             base.Initialize();
         }
@@ -210,6 +218,7 @@ namespace SS.Surface.XNA
             _spriteBatch.Draw(_qrCode, qrCodePosition, Color.White);
             _projectileManager.Draw(_spriteBatch);
             _userManager.Draw(_spriteBatch, _font);
+            _weaponsManager.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

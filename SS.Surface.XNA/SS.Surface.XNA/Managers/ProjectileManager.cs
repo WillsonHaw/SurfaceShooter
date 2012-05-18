@@ -7,20 +7,27 @@ namespace SS.Surface.XNA.Managers
 {
     public class ProjectileManager : GameComponent
     {
-        private static List<Projectile> _projectiles;
-        private static Texture2D _defaultSprite;
+        private static ProjectileManager _singleton;
+        public List<Projectile> Projectiles { get; private set; }
+        private Texture2D _defaultSprite;
 
         public ProjectileManager(Game game) : base(game)
         {
-            _projectiles = new List<Projectile>();
             _defaultSprite = game.Content.Load<Texture2D>("Sprites/projectile");
+            _singleton = this;
+        }
+
+        public override void Initialize()
+        {
+            Projectiles = new List<Projectile>();
         }
 
         public static void Create(int owner, int damage, Vector2 position, float velocity, float orientation, int life)
         {
-            lock (_projectiles)
+            lock (_singleton.Projectiles)
             {
-                _projectiles.Add(new Projectile
+                _singleton.
+                Projectiles.Add(new Projectile
                     {
                         Owner = owner,
                         Damage = damage,
@@ -28,7 +35,7 @@ namespace SS.Surface.XNA.Managers
                         Velocity = velocity,
                         Orientation = orientation,
                         Life = life,
-                        Sprite = _defaultSprite
+                        Sprite = _singleton._defaultSprite
                     });
             }
         }
@@ -37,9 +44,9 @@ namespace SS.Surface.XNA.Managers
         {
             List<Projectile> deadProjectiles = new List<Projectile>();
             
-            lock (_projectiles)
+            lock (Projectiles)
             {
-                foreach (var projectile in _projectiles)
+                foreach (var projectile in Projectiles)
                 {
                     projectile.Update(gameTime);
 
@@ -53,22 +60,22 @@ namespace SS.Surface.XNA.Managers
             }
         }
 
-        private void Remove(Projectile projectile)
+        public void Remove(Projectile projectile)
         {
             if (projectile != null)
             {
-                lock (_projectiles)
+                lock (Projectiles)
                 {
-                    _projectiles.Remove(projectile);
+                    Projectiles.Remove(projectile);
                 }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            lock (_projectiles)
+            lock (Projectiles)
             {
-                _projectiles.ForEach(p => spriteBatch.Draw(p.Sprite, p.Position, null, Color.White));
+                Projectiles.ForEach(p => spriteBatch.Draw(p.Sprite, p.Position, null, Color.White));
             }
         }
     }

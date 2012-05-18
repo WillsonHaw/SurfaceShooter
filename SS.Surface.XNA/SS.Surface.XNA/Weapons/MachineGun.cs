@@ -6,7 +6,7 @@ namespace SS.Surface.XNA.Weapons
     {
         public override int RateOfFire
         {
-            get { return 100; }
+            get { return 50; }
         }
 
         public override int BulletSpeed
@@ -24,6 +24,11 @@ namespace SS.Surface.XNA.Weapons
             get { return 3000; }
         }
 
+        public override float ChanceToSpawn
+        {
+            get { return 0.05f; }
+        }
+        
         public override void Shoot(int owner, Vector2 origin, float orientation)
         {
             DoShot(owner, origin, orientation);

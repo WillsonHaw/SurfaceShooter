@@ -24,6 +24,11 @@ namespace SS.Surface.XNA.Weapons
 	        get { return 3000; }
 	    }
 
+        public override float ChanceToSpawn
+        {
+            get { return 0f; }
+        }
+        
 	    public override void Shoot(int owner, Vector2 origin, float orientation)
 	    {
 	        DoShot(owner, origin, orientation);

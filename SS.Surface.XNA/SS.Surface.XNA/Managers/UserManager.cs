@@ -9,7 +9,8 @@ namespace SS.Surface.XNA.Managers
 {
     public class UserManager : GameComponent
     {
-        private List<User> _users = new List<User>();
+        public List<User> Users { get; private set; }
+
         private Texture2D _hpBackground;
         private Texture2D _hpFill;
 
@@ -19,20 +20,27 @@ namespace SS.Surface.XNA.Managers
 
         public UserManager(Game game) : base(game)
         {
-            _hpBackground = new Texture2D(game.GraphicsDevice, HPBarWidth, HPBarHeight);
-            _hpFill = new Texture2D(game.GraphicsDevice, HPBarWidth - HPBarPadding * 2, HPBarHeight - HPBarPadding * 2);
+            _hpBackground = new Texture2D(game.GraphicsDevice, 1, 1);
+            _hpBackground.SetData(new[] { Color.White });
+            _hpFill = new Texture2D(game.GraphicsDevice, 1, 1);
+            _hpFill.SetData(new[] { Color.White });
+        }
+
+        public override void Initialize()
+        {
+            Users = new List<User>();
         }
 
         public User Get(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return Users.FirstOrDefault(x => x.Id == id);
         }
 
         public void Create(int id, string name, Texture2D sprite)
         {
-            lock (_users)
+            lock (Users)
             {
-                if (_users.All(x => x.Id != id))
+                if (Users.All(x => x.Id != id))
                 {
                     var seed = new Random();
                     var position = new Vector2(seed.Next(960), seed.Next(1080));
@@ -47,35 +55,35 @@ namespace SS.Surface.XNA.Managers
                                           Sprite = sprite
                                       };
 
-                    _users.Add(newUser);
+                    Users.Add(newUser);
                 }
             }
         }
 
         public void Remove(int id)
         {
-            var user = _users.FirstOrDefault(x => x.Id == id);
+            var user = Users.FirstOrDefault(x => x.Id == id);
 
             if (user != null)
             {
-                lock (_users)
+                lock (Users)
                 {
-                    _users.Remove(user);
+                    Users.Remove(user);
                 }
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            lock (_users)
+            lock (Users)
             {
-                _users.ForEach(u => u.Update(gameTime));
+                Users.ForEach(u => u.Update(gameTime));
             }
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
-            foreach (var user in _users)
+            foreach (var user in Users)
             {
                 var rotation = user.Orientation + MathHelper.PiOver2;
                 var rotationOrigin = new Vector2(user.Sprite.Width / 2f, user.Sprite.Height / 2f);
@@ -84,12 +92,16 @@ namespace SS.Surface.XNA.Managers
                 var textPosition = new Vector2(
                     user.Position.X - (stringSize.X / 2f),
                     user.Position.Y + (user.Sprite.Height / 2f));
-                var hpPosition = new Vector2(
-                    user.Position.X - HPBarWidth / 2,
-                    user.Position.Y + HPBarHeight + (user.Sprite.Height / 2f));
-                var hpValuePosition = new Vector2(
+                var hpPosition = new Rectangle(
+                    (int)(user.Position.X - HPBarWidth / 2),
+                    (int)(user.Position.Y + HPBarHeight + (user.Sprite.Height / 2f)),
+                    HPBarWidth,
+                    HPBarHeight);
+                var hpValuePosition = new Rectangle(
                     hpPosition.X + HPBarPadding,
-                    hpPosition.Y + HPBarPadding);
+                    hpPosition.Y + HPBarPadding,
+                    (int)((HPBarWidth - HPBarPadding * 2) * (user.HP / 100f)),
+                    HPBarHeight - HPBarPadding * 2);
 
                 spriteBatch.Draw(user.Sprite, user.Position, null, Color.White, rotation, rotationOrigin, 1.0f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, user.Name, textPosition, Color.White);

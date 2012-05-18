@@ -11,6 +11,7 @@ var pubnub = require('pubnub').init({});
 /* Server */
 var clients = {};
 var lastId = 0;
+var gameIP = "";
 var server = express.createServer();
 server.use(express.cookieParser());
 server.use(express.bodyParser());
@@ -44,8 +45,11 @@ server.listen(PORT);
 
 /* Web Client */
 pubnub.subscribe({
-    channel: CLIENT_CHANNEL,
-    callback: function(message) {
-        console.log(message.texts);
+    channel: SURFACE_CHANNEL,
+    callback: function (message) {
+//        if (message.server) {
+//            clients = {};
+//            gameIP = message.server;
+//        }
     }
 });

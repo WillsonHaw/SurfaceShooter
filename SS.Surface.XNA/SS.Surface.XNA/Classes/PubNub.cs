@@ -69,11 +69,16 @@ namespace SS.Surface.XNA.Classes
                                         json
                                     };
             var url = Origin + string.Join("/", urlComponents.Select(HttpUtility.UrlEncode));
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Timeout = 200000;
-            request.ReadWriteTimeout = 200000;
-            var response = request.GetResponse();
-            response.Close();
+            var client = new WebClient();
+            client.DownloadDataAsync(new Uri(url));
+//            
+//            var request = (HttpWebRequest)WebRequest.Create(url);
+//            request.Timeout = 200000;
+//            request.ReadWriteTimeout = 200000;
+//            var response = request.BeginGetResponse(asyncResult =>
+//                                                    {
+//                                                        requ
+//                                                    }, null);
         }
     }
 }

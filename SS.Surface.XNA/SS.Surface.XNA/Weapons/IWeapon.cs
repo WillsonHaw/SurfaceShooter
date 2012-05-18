@@ -8,6 +8,7 @@ namespace SS.Surface.XNA.Weapons
         int BulletSpeed { get; }
         int Damage { get; }
         int ProjectileLife { get; }
+        float ChanceToSpawn { get; }
         void Shoot(int owner, Vector2 origin, float direction);
     }
 }

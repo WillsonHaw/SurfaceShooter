@@ -1,5 +1,7 @@
 Content\Sprites\spaceship.xnb
 Content\Fonts\Hud.xnb
 Content\Sprites\projectile.xnb
+Content\Sprites\Weapons\MachineGun.xnb
+Content\Sprites\Weapons\Spreader.xnb
 Resources\icon.png
 SS.Surface.XNA.xml

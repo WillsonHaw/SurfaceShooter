@@ -1,5 +1,6 @@
 ﻿using System.Timers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SS.Surface.XNA.Managers;
 
 namespace SS.Surface.XNA.Weapons
@@ -10,6 +11,7 @@ namespace SS.Surface.XNA.Weapons
         public abstract int BulletSpeed { get; }
         public abstract int Damage { get; }
         public abstract int ProjectileLife { get; }
+        public abstract float ChanceToSpawn { get; }
 
         private Timer _shotTimer;
         private bool _cooldown;
